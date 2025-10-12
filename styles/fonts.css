@@ -18,7 +18,7 @@
 }
 
 @font-face {
-  font-family: "Public Sans";
+  font-family: "Public Sans", sans-serif;
   src: url("../fonts/PublicSans-Bold.woff2");
   font-weight: 700;
 }

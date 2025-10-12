@@ -1,371 +1,528 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="styles/style.css" />
-    <link rel="stylesheet" href="styles/fonts.css" />
-    <title>Document</title>
-  </head>
-  <body>
-    <header class="header">
-      <div class="container header__container">
-        <img class="logo" src="./images/logo.png" alt="" />
-        <img class="burger" src="./images/burger.svg" alt="" />
-        <div class="mobile__menu">
-          <nav class="mob-nav">
-            <ul class="mob-list">
-              <li class="mob-item">
-                <a href="" class="mob-link">Image to Text Converter</a>
-              </li>
-              <li class="mob-item"><a href="" class="mob-link">Features</a></li>
-              <li class="mob-item">
-                <a href="" class="mob-link">How it works</a>
-              </li>
-              <li class="mob-item"><a href="" class="mob-link">FAQs</a></li>
-            </ul>
-          </nav>
-        </div>
-        <nav class="header__nav">
-          <ul class="nav__list">
-            <li class="nav__list-item">
-              <a href="">Image to Text Converter</a>
-            </li>
-            <li class="nav__list-item"><a href="">Features</a></li>
-            <li class="nav__list-item"><a href="">How it works</a></li>
-            <li class="nav__list-item"><a href="">FAQs</a></li>
-          </ul>
-        </nav>
-        <button class="header__button">Upload Image</button>
-      </div>
-    </header>
-    <main>
-      <section class="hero">
-        <div class="container">
-          <div class="hero__text">
-            <h1 class="hero__heading">Image to Text Converter</h1>
-            <p class="hero__subheading">
-              Extracting text from images is now quick and easy. Instead of
-              manually retyping JPGs, PNGs, or scanned PDFs, OCR technology lets
-              you convert them into editable text within seconds.
-            </p>
-          </div>
-          <div class="input__container">
-            <div class="inner">
-              <img class="file-img" src="./images/file.svg" alt="" />
-              <h3>Drop, Upload or Paste Images</h3>
-              <p>Supported formats: JPG, PNG, GIF, PDF & More</p>
-              <div class="btns__list">
-                <button class="btn-upload">Upload Image</button
-                ><button class="btn-link">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none">
-                    <path
-                      d="M13.0607 8.11097L14.4749 9.52518C17.2086 12.2589 17.2086 16.691 14.4749 19.4247L14.1214 19.7782C11.3877 22.5119 6.95555 22.5119 4.22188 19.7782C1.48821 17.0446 1.48821 12.6124 4.22188 9.87874L5.6361 11.293C3.68348 13.2456 3.68348 16.4114 5.6361 18.364C7.58872 20.3166 10.7545 20.3166 12.7072 18.364L13.0607 18.0105C15.0133 16.0578 15.0133 12.892 13.0607 10.9394L11.6465 9.52518L13.0607 8.11097ZM19.7782 14.1214L18.364 12.7072C20.3166 10.7545 20.3166 7.58872 18.364 5.6361C16.4114 3.68348 13.2456 3.68348 11.293 5.6361L10.9394 5.98965C8.98678 7.94227 8.98678 11.1081 10.9394 13.0607L12.3536 14.4749L10.9394 15.8891L9.52518 14.4749C6.79151 11.7413 6.79151 7.30911 9.52518 4.57544L9.87874 4.22188C12.6124 1.48821 17.0446 1.48821 19.7782 4.22188C22.5119 6.95555 22.5119 11.3877 19.7782 14.1214Z"
-                      fill="black" />
-                  </svg>
-                </button>
-              </div>
-            </div>
-          </div>
-          <p class="subtitle--input-container">
-            Your privacy is protected! No data is transmitted or stored
-          </p>
-        </div>
-      </section>
-      <section class="usage">
-        <div class="container usage__container">
-          <h2 class="usage__heading">How to use image to text?</h2>
-          <p class="usage__subtitle">
-            Here’s how our tool works in a simple step-by-step process:
-          </p>
-          <ul class="usage__list">
-            <li class="usage__item">
-              <img src="./images/usage1.svg" alt="" />
-              <h3>Upload Your Image</h3>
-              <p>
-                Upload Your Image – Select the image files or PDF from your
-                device you want to convert. You can also paste the image url or
-                use a phone camera.
-              </p>
-            </li>
-            <li class="usage__item">
-              <img src="./images/usage2.svg" alt="" />
-              <h3>Copy is Ready</h3>
-              <p>
-                Within seconds, the tool extracts the text from the image. You
-                can use the “Copy” button to copy it or use the “Download”
-                button to download as a txt file.
-              </p>
-            </li>
-            <li class="usage__item">
-              <img src="./images/usage3.svg" alt="" />
-              <h3>Click the Convert</h3>
-              <p>
-                Now click the "Convert" button. By clicking this it uses OCR
-                technology to detect letters, words, numbers, and even
-                formatting within. Our OCR will process the image.
-              </p>
-            </li>
-          </ul>
-        </div>
-      </section>
-      <section class="advantages">
-        <div class="container advantages__container">
-          <h2 class="advantages__heading">Why Choose Our Tool?</h2>
-          <div class="table__wrapper">
-            <div class="table">
-              <div class="col1">
-                <ul>
-                  <li>Feature</li>
-                  <li>🖼️ Image Formats</li>
-                  <li>⬇️ Download</li>
-                  <li>🌍 Languages</li>
-                  <li>💰 Price</li>
-                  <li>🔒 Safety</li>
-                </ul>
-              </div>
-              <div class="col2">
-                <ul>
-                  <li>Details</li>
-                  <li>JPG, PNG, GIF, PDF & More</li>
-                  <li>Copy to Clipboard or Download .txt File</li>
-                  <li>EN, DE, BR, FR, ES, and more</li>
-                  <li>Free Unlimited Access</li>
-                  <li>No data store</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section class="clients">
-        <div class="container clients__container">
-          <h2 class="clients__heading">Who Can Use Our Tool?</h2>
-          <p class="clients__subtitle">
-            Our tool allows you to extract text from design elements or
-            sketches, facilitating the seamless integration of textual content
-            into visual projects.
-          </p>
-          <ul class="clients__list">
-            <li>
-              <img src="./images/client1.svg" alt="" class="clients__img" />
-              <h3>Students</h3>
-              <p>
-                Students can digitize handwritten notes, lecture slides, and
-                library books. This makes studying easier, notes searchable, and
-                sharing with classmates much faster.
-              </p>
-            </li>
-            <li>
-              <img src="./images/client2.svg" alt="" class="clients__img" />
-              <h3>Teachers & Educators</h3>
-              <p>
-                Teachers can convert exam papers, assignments, and lesson plans
-                into editable text. This helps update old material quickly and
-                reuse content without starting from scratch.
-              </p>
-              <img src="./images/client_plus.svg" alt="" class="clients__svg" />
-            </li>
-            <li>
-              <img src="./images/client3.svg" alt="" class="clients__img" />
-              <h3>Bankers & Accountants</h3>
-              <p>
-                Bank staff and accountants can scan receipts, cheques, and
-                financial statements. Digitizing these records reduces errors,
-                saves storage space, and improves financial reporting and
-                customer service.
-              </p>
-              <img src="./images/client_plus.svg" alt="" class="clients__svg" />
-            </li>
-            <li>
-              <img src="./images/client4.svg" alt="" class="clients__img" />
-              <h3>Journalists & Writers</h3>
-              <p>
-                Reporters can extract text from newspapers, press releases, or
-                field notes. This saves retyping time and speeds up creating
-                digital news stories for online publishing.
-              </p>
-              <img src="./images/client_plus.svg" alt="" class="clients__svg" />
-            </li>
-          </ul>
-        </div>
-      </section>
-      <section class="features">
-        <div class="container features__container">
-          <h2 class="features__heading">Features of Image to text?</h2>
-          <p class="features__subtitle">
-            Some of the features of this tool that stand out are given below:
-          </p>
-        </div>
-        <div class="features__list">
-          <ul class="row1">
-            <li class="feature">
-              <img src="./images/feature1.svg" alt="" />
-              <h3>AI-Based Text Extraction</h3>
-              <p>
-                Our AI-powered OCR uses advanced NLP models to accurately
-                extract printed text from images, making it editable,
-                searchable, and ready to use instantly.
-              </p>
-            </li>
-            <li class="feature">
-              <img src="./images/feature2.svg" alt="" />
-              <h3>Identify Mathematical Solution</h3>
-              <p>
-                Extract mathematical equations, formulas, and symbols like √, ∑,
-                ∫, fractions, and algebraic expressions with precision using
-                NLP-based recognition, ideal for students, teachers, and
-                researchers.
-              </p>
-            </li>
-            <li class="feature">
-              <img src="./images/feature3.svg" alt="" />
-              <h3>Extract Text from Low-Resolution Images</h3>
-              <p>
-                NLP-driven OCR enhances blurry or pixelated images, recognizing
-                text from low-quality scans, screenshots, or compressed photos,
-                ensuring readability and accurate data extraction.
-              </p>
-            </li>
-            <li class="feature">
-              <img src="./images/feature4.svg" alt="" />
-              <h3>Multi-Language Support</h3>
-              <p>
-                Supports text recognition in 100+ languages, including English,
-                Spanish, Arabic, Urdu, Chinese, and French, using advanced NLP
-                language models for accurate extraction and translation.
-              </p>
-            </li>
-          </ul>
-          <ul class="row2">
-            <li class="feature">
-              <img src="./images/feature5.svg" alt="" />
-              <h3>Handwritten Recognition</h3>
-              <p>
-                AI handwriting OCR with NLP detects and converts handwritten
-                notes, signatures, or forms into editable digital text, even
-                with cursive or messy writing styles.
-              </p>
-            </li>
-            <li class="feature">
-              <img src="./images/feature6.svg" alt="" />
-              <h3>Data Privacy</h3>
-              <p>
-                Your data is safe—images and extracted text are not stored or
-                shared. Our OCR processes everything in real-time and deletes
-                files instantly after extraction.
-              </p>
-            </li>
-            <li class="feature">
-              <img src="./images/feature7.svg" alt="" />
-              <h3>Higher Free Limits</h3>
-              <p>
-                Enjoy more free conversions daily than most tools, allowing
-                extended OCR usage without mandatory paid plans—ideal for
-                students, professionals, and researchers.
-              </p>
-            </li>
-            <li class="feature">
-              <img src="./images/feature8.svg" alt="" />
-              <h3>Support Different Formats</h3>
-              <p>
-                Extract text from multiple file formats including JPG, PNG, BMP,
-                TIFF, GIF, and PDF using NLP-powered OCR, ensuring flexibility
-                for all types of documents.
-              </p>
-            </li>
-          </ul>
-          <img
-            class="features__plus1"
-            src="./images/client_plus.svg"
-            alt="" /><img
-            class="features__plus2"
-            src="./images/client_plus.svg"
-            alt="" /><img
-            class="features__plus3"
-            src="./images/client_plus.svg"
-            alt="" />
-        </div>
-      </section>
-      <section class="cases">
-        <div class="container cases__container">
-          <h2 class="cases__heading">Image to text use cases?</h2>
-          <div class="cases__wrapper">
-            <img class="cases-bg" src="./images/cases-bg.png" alt="" />
-            <ul class="cases__info">
-              <li class="case">
-                <img src="./images/case.svg" alt="" />
-                <p>
-                  Turn office documents, contracts, reports, and even
-                  screenshots of important details into editable text. This
-                  saves time, reduces paperwork, and makes collaboration easier.
-                </p>
-              </li>
-              <li class="case">
-                <img src="./images/case.svg" alt="" />
-                <p>
-                  Extract text from receipts, invoices, and bills to create
-                  digital records. It helps in expense tracking, accounting, and
-                  ensures everything stays organized.
-                </p>
-              </li>
-              <li class="case">
-                <img src="./images/case.svg" alt="" />
-                <p>
-                  Travelers and multilingual users can scan menus, signboards,
-                  or documents in foreign languages. Once the text is extracted,
-                  it can easily be translated for better understanding.
-                </p>
-              </li>
-              <li class="case">
-                <img src="./images/case.svg" alt="" />
-                <p>
-                  Preserve printed material like newspapers, magazines, or old
-                  records by digitizing them. Plus, since the tool processes
-                  files in real time without storage, sensitive documents remain
-                  private and secure.
-                </p>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
-      <!-- <section class="blogs">
-        <div class="container blogs__container">
-          <h2 class="blogs__heading">Our Latest Blogs</h2>
-          <ul class="blogs__list">
-            <li class="blog">
-              <img src="./images/blog1.png" alt="" class="blog-img" />
-              <h3 class="blog-title">
-                Unlocking the Power of Multi-Language Support in Image to Text
-                Solutions
-              </h3>
-              <p class="blog-date">January 14, 2025</p>
-            </li>
-            <li class="blog">
-              <img src="./images/blog2.png" alt="" class="blog-img" />
-              <h3 class="blog-title">
-                Exploring Multi-Language Capabilities for Image to Text
-                Technology
-              </h3>
-              <p class="blog-date">January 14, 2025</p>
-            </li>
-            <li class="blog">
-              <img src="./images/blog3.png" alt="" class="blog-img" />
-              <h3 class="blog-title">
-                Enhancing Image to Text Services with Multi-Language Support
-              </h3>
-              <p class="blog-date">January 14, 2025</p>
-            </li>
-          </ul>
-        </div>
-      </section> -->
-    </main>
-    <script src="./js/main.js"></script>
-  </body>
+<head>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<link rel="stylesheet" href="styles/style.css"/>
+	<link rel="stylesheet" href="styles/fonts.css"/>
+	<title>Document</title>
+</head>
+<body>
+<header class="header">
+	<div class="container header__container">
+		<img class="logo" src="./images/logo.png" alt=""/>
+		<img class="burger" src="./images/burger.svg" alt=""/>
+		<div class="mobile__menu">
+			<nav class="mob-nav">
+				<ul class="mob-list">
+					<li class="mob-item">
+						<a href="" class="mob-link">Image to Text Converter</a>
+					</li>
+					<li class="mob-item"><a href="" class="mob-link">Features</a></li>
+					<li class="mob-item">
+						<a href="" class="mob-link">How it works</a>
+					</li>
+					<li class="mob-item"><a href="" class="mob-link">FAQs</a></li>
+				</ul>
+			</nav>
+		</div>
+		<nav class="header__nav">
+			<ul class="nav__list">
+				<li class="nav__list-item">
+					<a href="#hero">Image to Text Converter</a>
+				</li>
+				<li class="nav__list-item"><a href="#features">Features</a></li>
+				<li class="nav__list-item"><a href="#how">How it works</a></li>
+				<li class="nav__list-item"><a href="#faq">FAQs</a></li>
+			</ul>
+		</nav>
+		<button class="header__button">Upload Image</button>
+	</div>
+</header>
+<main>
+	<section class="hero" id="hero">
+		<div class="container">
+			<div class="hero__text">
+				<h1 class="hero__heading">Image to Text Converter</h1>
+				<p class="hero__subheading">
+					Extracting text from images is now quick and easy. Instead of
+					manually retyping JPGs, PNGs, or scanned PDFs, OCR technology lets
+					you convert them into editable text within seconds.
+				</p>
+			</div>
+			<div class="input__container">
+				<div class="inner">
+					<div id="turnstile-container" style="display:none;">
+						<div id="turnstile-widget"></div>
+					</div>
+					<img class="file-img" src="./images/file.svg" alt=""/>
+					<h3>Drop, Upload or Paste Images</h3>
+					<p>Supported formats: JPG, PNG, GIF, PDF & More</p>
+					<div class="btns__list">
+						<input type="file" id="imageInput" class="btn-upload"> </input>
+						<button onclick="startOCR()">Convert Image</button>
+						<div id="result"></div>
+						<button class="btn-link">
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="24"
+								height="24"
+								viewBox="0 0 24 24"
+								fill="none">
+								<path
+									d="M13.0607 8.11097L14.4749 9.52518C17.2086 12.2589 17.2086 16.691 14.4749 19.4247L14.1214 19.7782C11.3877 22.5119 6.95555 22.5119 4.22188 19.7782C1.48821 17.0446 1.48821 12.6124 4.22188 9.87874L5.6361 11.293C3.68348 13.2456 3.68348 16.4114 5.6361 18.364C7.58872 20.3166 10.7545 20.3166 12.7072 18.364L13.0607 18.0105C15.0133 16.0578 15.0133 12.892 13.0607 10.9394L11.6465 9.52518L13.0607 8.11097ZM19.7782 14.1214L18.364 12.7072C20.3166 10.7545 20.3166 7.58872 18.364 5.6361C16.4114 3.68348 13.2456 3.68348 11.293 5.6361L10.9394 5.98965C8.98678 7.94227 8.98678 11.1081 10.9394 13.0607L12.3536 14.4749L10.9394 15.8891L9.52518 14.4749C6.79151 11.7413 6.79151 7.30911 9.52518 4.57544L9.87874 4.22188C12.6124 1.48821 17.0446 1.48821 19.7782 4.22188C22.5119 6.95555 22.5119 11.3877 19.7782 14.1214Z"
+									fill="black"/>
+							</svg>
+						</button>
+					</div>
+				</div>
+			</div>
+			<p class="subtitle--input-container">
+				Your privacy is protected! No data is transmitted or stored
+			</p>
+		</div>
+	</section>
+	<section class="usage" id="how">
+		<div class="container usage__container">
+			<h2 class="usage__heading">How to use image to text?</h2>
+			<p class="usage__subtitle">
+				Here’s how our tool works in a simple step-by-step process:
+			</p>
+			<ul class="usage__list">
+				<li class="usage__item">
+					<img src="./images/usage1.svg" alt=""/>
+					<h3>Upload Your Image</h3>
+					<p>
+						Upload Your Image – Select the image files or PDF from your
+						device you want to convert. You can also paste the image url or
+						use a phone camera.
+					</p>
+				</li>
+				<li class="usage__item">
+					<img src="./images/usage2.svg" alt=""/>
+					<h3>Copy is Ready</h3>
+					<p>
+						Within seconds, the tool extracts the text from the image. You
+						can use the “Copy” button to copy it or use the “Download”
+						button to download as a txt file.
+					</p>
+				</li>
+				<li class="usage__item">
+					<img src="./images/usage3.svg" alt=""/>
+					<h3>Click the Convert</h3>
+					<p>
+						Now click the "Convert" button. By clicking this it uses OCR
+						technology to detect letters, words, numbers, and even
+						formatting within. Our OCR will process the image.
+					</p>
+				</li>
+			</ul>
+		</div>
+	</section>
+	<section class="advantages">
+		<div class="container advantages__container">
+			<h2 class="advantages__heading">Why Choose Our Tool?</h2>
+			<div class="table__wrapper">
+				<div class="table">
+					<div class="col1">
+						<ul>
+							<li>Feature</li>
+							<li>🖼️ Image Formats</li>
+							<li>⬇️ Download</li>
+							<li>🌍 Languages</li>
+							<li>💰 Price</li>
+							<li>🔒 Safety</li>
+						</ul>
+					</div>
+					<div class="col2">
+						<ul>
+							<li>Details</li>
+							<li>JPG, PNG, GIF, PDF & More</li>
+							<li>Copy to Clipboard or Download .txt File</li>
+							<li>EN, DE, BR, FR, ES, and more</li>
+							<li>Free Unlimited Access</li>
+							<li>No data store</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section class="clients">
+		<div class="container clients__container">
+			<h2 class="clients__heading">Who Can Use Our Tool?</h2>
+			<p class="clients__subtitle">
+				Our tool allows you to extract text from design elements or
+				sketches, facilitating the seamless integration of textual content
+				into visual projects.
+			</p>
+			<ul class="clients__list">
+				<li>
+					<img src="./images/client1.svg" alt="" class="clients__img"/>
+					<h3>Students</h3>
+					<p>
+						Students can digitize handwritten notes, lecture slides, and
+						library books. This makes studying easier, notes searchable, and
+						sharing with classmates much faster.
+					</p>
+				</li>
+				<li>
+					<img src="./images/client2.svg" alt="" class="clients__img"/>
+					<h3>Teachers & Educators</h3>
+					<p>
+						Teachers can convert exam papers, assignments, and lesson plans
+						into editable text. This helps update old material quickly and
+						reuse content without starting from scratch.
+					</p>
+					<img src="./images/client_plus.svg" alt="" class="clients__svg"/>
+				</li>
+				<li>
+					<img src="./images/client3.svg" alt="" class="clients__img"/>
+					<h3>Bankers & Accountants</h3>
+					<p>
+						Bank staff and accountants can scan receipts, cheques, and
+						financial statements. Digitizing these records reduces errors,
+						saves storage space, and improves financial reporting and
+						customer service.
+					</p>
+					<img src="./images/client_plus.svg" alt="" class="clients__svg"/>
+				</li>
+				<li>
+					<img src="./images/client4.svg" alt="" class="clients__img"/>
+					<h3>Journalists & Writers</h3>
+					<p>
+						Reporters can extract text from newspapers, press releases, or
+						field notes. This saves retyping time and speeds up creating
+						digital news stories for online publishing.
+					</p>
+					<img src="./images/client_plus.svg" alt="" class="clients__svg"/>
+				</li>
+			</ul>
+		</div>
+	</section>
+	<section class="features" id="features">
+		<div class="container features__container">
+			<h2 class="features__heading">Features of Image to text?</h2>
+			<p class="features__subtitle">
+				Some of the features of this tool that stand out are given below:
+			</p>
+		</div>
+		<div class="features__list">
+			<ul class="row1">
+				<li class="feature">
+					<img src="./images/feature1.svg" alt=""/>
+					<h3>AI-Based Text Extraction</h3>
+					<p>
+						Our AI-powered OCR uses advanced NLP models to accurately
+						extract printed text from images, making it editable,
+						searchable, and ready to use instantly.
+					</p>
+				</li>
+				<li class="feature">
+					<img src="./images/feature2.svg" alt=""/>
+					<h3>Identify Mathematical Solution</h3>
+					<p>
+						Extract mathematical equations, formulas, and symbols like √, ∑,
+						∫, fractions, and algebraic expressions with precision using
+						NLP-based recognition, ideal for students, teachers, and
+						researchers.
+					</p>
+				</li>
+				<li class="feature">
+					<img src="./images/feature3.svg" alt=""/>
+					<h3>Extract Text from Low-Resolution Images</h3>
+					<p>
+						NLP-driven OCR enhances blurry or pixelated images, recognizing
+						text from low-quality scans, screenshots, or compressed photos,
+						ensuring readability and accurate data extraction.
+					</p>
+				</li>
+				<li class="feature">
+					<img src="./images/feature4.svg" alt=""/>
+					<h3>Multi-Language Support</h3>
+					<p>
+						Supports text recognition in 100+ languages, including English,
+						Spanish, Arabic, Urdu, Chinese, and French, using advanced NLP
+						language models for accurate extraction and translation.
+					</p>
+				</li>
+			</ul>
+			<ul class="row2">
+				<li class="feature">
+					<img src="./images/feature5.svg" alt=""/>
+					<h3>Handwritten Recognition</h3>
+					<p>
+						AI handwriting OCR with NLP detects and converts handwritten
+						notes, signatures, or forms into editable digital text, even
+						with cursive or messy writing styles.
+					</p>
+				</li>
+				<li class="feature">
+					<img src="./images/feature6.svg" alt=""/>
+					<h3>Data Privacy</h3>
+					<p>
+						Your data is safe—images and extracted text are not stored or
+						shared. Our OCR processes everything in real-time and deletes
+						files instantly after extraction.
+					</p>
+				</li>
+				<li class="feature">
+					<img src="./images/feature7.svg" alt=""/>
+					<h3>Higher Free Limits</h3>
+					<p>
+						Enjoy more free conversions daily than most tools, allowing
+						extended OCR usage without mandatory paid plans—ideal for
+						students, professionals, and researchers.
+					</p>
+				</li>
+				<li class="feature">
+					<img src="./images/feature8.svg" alt=""/>
+					<h3>Support Different Formats</h3>
+					<p>
+						Extract text from multiple file formats including JPG, PNG, BMP,
+						TIFF, GIF, and PDF using NLP-powered OCR, ensuring flexibility
+						for all types of documents.
+					</p>
+				</li>
+			</ul>
+			<img
+				class="features__plus1"
+				src="./images/client_plus.svg"
+				alt=""/><img
+			class="features__plus2"
+			src="./images/client_plus.svg"
+			alt=""/><img
+			class="features__plus3"
+			src="./images/client_plus.svg"
+			alt=""/>
+		</div>
+	</section>
+	<section class="cases">
+		<div class="container cases__container">
+			<h2 class="cases__heading">Image to text use cases?</h2>
+			<div class="cases__wrapper">
+				<img class="cases-bg" src="./images/cases-bg.png" alt=""/>
+				<ul class="cases__info">
+					<li class="case">
+						<img src="./images/case.svg" alt=""/>
+						<p>
+							Turn office documents, contracts, reports, and even
+							screenshots of important details into editable text. This
+							saves time, reduces paperwork, and makes collaboration easier.
+						</p>
+					</li>
+					<li class="case">
+						<img src="./images/case.svg" alt=""/>
+						<p>
+							Extract text from receipts, invoices, and bills to create
+							digital records. It helps in expense tracking, accounting, and
+							ensures everything stays organized.
+						</p>
+					</li>
+					<li class="case">
+						<img src="./images/case.svg" alt=""/>
+						<p>
+							Travelers and multilingual users can scan menus, signboards,
+							or documents in foreign languages. Once the text is extracted,
+							it can easily be translated for better understanding.
+						</p>
+					</li>
+					<li class="case">
+						<img src="./images/case.svg" alt=""/>
+						<p>
+							Preserve printed material like newspapers, magazines, or old
+							records by digitizing them. Plus, since the tool processes
+							files in real time without storage, sensitive documents remain
+							private and secure.
+						</p>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<ul class="cases--bubbles container">
+			<li class="bubble">Digitize Office Documents</li>
+			<li class="bubble">Extract Text from Receipts & Bills</li>
+			<li class="bubble">Convert Screenshots to Text</li>
+			<li class="bubble">Translate Foreign Text</li>
+			<li class="bubble">Archive Printed Material</li>
+			<li class="bubble">Securely Handle Sensitive Files</li>
+		</ul>
+	</section>
+	<section class="blogs">
+		<div class="container blogs__container">
+			<h2 class="blogs__heading">Our Latest Blogs</h2>
+			<ul class="blogs__list">
+				<li class="blog">
+					<div class="blog-top">
+						<img src="./images/blog1.png" alt="" class="blog-img"/>
+						<h3 class="blog-title">
+							Unlocking the Power of Multi-Language Support in Image to Text
+							Solutions
+						</h3>
+					</div>
+					<p class="blog-date">January 14, 2025</p>
+				</li>
+				<li class="blog">
+					<div class="blog-top">
+						<img src="./images/blog2.png" alt="" class="blog-img"/>
+						<h3 class="blog-title">
+							Exploring Multi-Language Capabilities for Image to Text
+							Technology
+						</h3>
+					</div>
+					<p class="blog-date">January 14, 2025</p>
+				</li>
+				<li class="blog">
+					<div class="blog-top">
+						<img src="./images/blog3.png" alt="" class="blog-img"/>
+						<h3 class="blog-title">
+							Enhancing Image to Text Services with Multi-Language Support
+						</h3>
+					</div>
+					<p class="blog-date">January 14, 2025</p>
+				</li>
+			</ul>
+		</div>
+	</section>
+	<section class="faq" id="faq">
+		<div class="container faq__container">
+			<div class="faq--left">
+				<h2 class="faq--heading">Frequently Asked Questions</h2>
+				<p class="faq--subheading">Online Image to text converter converts any
+					image into editable text.</p>
+			</div>
+			<div class="faq--right">
+				<ul class="faq--list">
+					<li class="faq--item">
+						<div class="faq-top">
+							<img class="minus" src="./images/minus.svg" alt="">
+							<img class="plus" src="./images/plus.svg" alt="">Why should I
+							convert JPG to text?
+						</div>
+						<div class="faq-bottom">
+							<div>You can easily convert JPG images into editable text using
+								our online Picture-to-Text Converter.
+							</div>
+						</div>
+					</li>
+					<li class="faq--item">
+						<div class="faq-top">
+							<img class="minus" src="./images/minus.svg" alt="">
+							<img class="plus" src="./images/plus.svg" alt="">How can I turn a
+							picture into editable text?
+						</div>
+						<div class="faq-bottom">
+							<div>You can easily convert JPG images into editable text using
+								our online Picture-to-Text Converter.
+							</div>
+						</div>
+					</li>
+					<li class="faq--item">
+						<div class="faq-top">
+							<img class="minus" src="./images/minus.svg" alt="">
+							<img class="plus" src="./images/plus.svg" alt="">How can I extract
+							handwritten text from an image?
+						</div>
+						<div class="faq-bottom">
+							<div>Can I extract text from multiple images at once?</div>
+						</div>
+					</li>
+					<li class="faq--item">
+						<div class="faq-top">
+							<img class="minus" src="./images/minus.svg" alt="">
+							<img class="plus" src="./images/plus.svg" alt="">Why should I
+							convert JPG to text?
+						</div>
+						<div class="faq-bottom">
+							<div>You can easily convert JPG images into editable text using
+								our online Picture-to-Text Converter.
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</section>
+</main>
+<footer class="footer">
+	<div class="container footer--container">
+		<div class="footer--top">
+			<ul class="footer--about">
+				<li><img class="footer-img" src="./images/footer-img.png" alt=""></li>
+				<li>435 N Whisman Rd, Mountain View, CA 94043</li>
+			</ul>
+			<ul class="footer--useful">
+				<li class="useful--heading">Useful Link</li>
+				<li class="footer--useful-item">About Us</li>
+				<li class="footer--useful-item">Blog</li>
+				<li class="footer--useful-item">Contact Us</li>
+			</ul>
+			<ul class="footer--social">
+				<li class="social--heading">Follow Us</li>
+				<li>
+					<ul class="social--list">
+						<li><a href="">
+							<svg xmlns="http://www.w3.org/2000/svg" width="25" height="24"
+							     viewBox="0 0 25 24" fill="none">
+								<path
+									d="M13.6667 10H18.1667L17.6667 12H13.6667V21H11.6667V12H7.66675V10H11.6667V8.12777C11.6667 6.34473 11.8524 5.69816 12.201 5.04631C12.5496 4.39446 13.0612 3.88288 13.713 3.53427C14.3649 3.18565 15.0114 3 16.7945 3C17.3165 3 17.7739 3.05 18.1667 3.15V5H16.7945C15.4708 5 15.0677 5.07784 14.6562 5.29789C14.3529 5.46011 14.1268 5.68619 13.9646 5.98951C13.7445 6.40096 13.6667 6.80407 13.6667 8.12777V10Z"
+									fill="white" fill-opacity="0.8"/>
+							</svg>
+						</a></li>
+						<li><a href="">
+							<svg xmlns="http://www.w3.org/2000/svg" width="25" height="24"
+							     viewBox="0 0 25 24" fill="none">
+								<path
+									d="M12.6677 9.55005C13.5848 8.61327 14.7788 8 16.1677 8C19.2052 8 21.6677 10.4624 21.6677 13.5V21H19.6677V13.5C19.6677 11.567 18.1007 10 16.1677 10C14.2347 10 12.6677 11.567 12.6677 13.5V21H10.6677V8.5H12.6677V9.55005ZM5.66772 6.5C4.83929 6.5 4.16772 5.82843 4.16772 5C4.16772 4.17157 4.83929 3.5 5.66772 3.5C6.49614 3.5 7.16772 4.17157 7.16772 5C7.16772 5.82843 6.49614 6.5 5.66772 6.5ZM4.66772 8.5H6.66772V21H4.66772V8.5Z"
+									fill="white" fill-opacity="0.8"/>
+							</svg>
+						</a></li>
+						<li><a href="">
+							<svg xmlns="http://www.w3.org/2000/svg" width="25" height="24"
+							     viewBox="0 0 25 24" fill="none">
+								<path
+									d="M11.155 14.651L15.9167 21H22.9167L15.0584 10.5223L21.5975 3H18.9475L13.831 8.88578L9.41675 3H2.41675L9.92761 13.0145L2.9859 21H5.63592L11.155 14.651ZM16.9167 19L6.41675 5H8.41675L18.9167 19H16.9167Z"
+									fill="white" fill-opacity="0.8"/>
+							</svg>
+						</a></li>
+						<li><a href="">
+							<svg xmlns="http://www.w3.org/2000/svg" width="25" height="24"
+							     viewBox="0 0 25 24" fill="none">
+								<path
+									d="M9.15835 19.1912C9.18209 18.8546 9.2298 18.5199 9.3013 18.1897C9.36428 17.8951 9.55542 17.0596 9.83546 15.8498L9.84255 15.8191C9.96569 15.2872 10.0976 14.7192 10.2296 14.1525C10.3087 13.8124 10.3703 13.5484 10.4111 13.4602C10.2169 13.0123 10.1197 12.5263 10.1264 12.0373C10.1264 10.6999 10.8824 9.66359 11.8625 9.6636C12.2222 9.65809 12.5663 9.81388 12.805 10.09C13.0431 10.3655 13.153 10.7335 13.1071 11.086C13.1071 11.5385 13.0215 11.8844 12.6532 13.1212C12.5825 13.3587 12.5341 13.5254 12.4882 13.692C12.4363 13.8799 12.3928 14.0503 12.3554 14.2136C12.2595 14.6003 12.3478 15.011 12.5929 15.3195C12.8374 15.6272 13.2088 15.7966 13.5986 15.7762C15.0909 15.7762 16.1988 13.7911 16.1988 11.2277C16.1988 9.25804 14.9079 7.95424 12.7667 7.95416C11.6891 7.91127 10.6414 8.32523 9.86769 9.09986C9.09338 9.87508 8.66127 10.9437 8.67234 12.0614C8.64889 12.6633 8.83738 13.2536 9.18478 13.7053C9.36589 13.8441 9.43543 14.0885 9.35936 14.2941C9.31832 14.4632 9.21933 14.8473 9.18323 14.9755C9.16138 15.1032 9.08171 15.2131 8.968 15.2715C8.85352 15.3303 8.71846 15.3297 8.61292 15.2737C7.45181 14.7954 6.81641 13.4963 6.81641 11.8349C6.81641 8.84907 9.30803 6.2497 13.0084 6.2497C16.1439 6.2497 18.4898 8.57864 18.4898 11.3896C18.4898 14.922 16.5578 17.4942 13.8004 17.4942C13.006 17.5202 12.2505 17.162 11.7537 16.535L11.7107 16.712C11.6166 17.0992 11.5695 17.2928 11.5035 17.5638L11.5016 17.5715C11.3554 18.1717 11.2534 18.5885 11.2138 18.7452C11.1079 19.0998 10.9737 19.448 10.8138 19.7841C11.4088 19.9253 12.0295 20 12.6677 20C17.086 20 20.6677 16.4183 20.6677 12C20.6677 7.58172 17.086 4 12.6677 4C8.24945 4 4.66772 7.58172 4.66772 12C4.66772 15.1594 6.49918 17.8911 9.15835 19.1912ZM12.6677 22C7.14488 22 2.66772 17.5228 2.66772 12C2.66772 6.47715 7.14488 2 12.6677 2C18.1905 2 22.6677 6.47715 22.6677 12C22.6677 17.5228 18.1905 22 12.6677 22Z"
+									fill="white" fill-opacity="0.8"/>
+							</svg>
+						</a></li>
+					</ul>
+				</li>
+			</ul>
+			<div class="dropdown" id="languageDropdown">
+				<div class="dropdown-btn">
+					<span id="selectedLang">English</span>
+					<span class="arrow"><img src="./images/dropdown-arrow.svg"
+					                         alt=""></span>
+				</div>
+				<div class="dropdown-list">
+					<div class="dropdown-item">English</div>
+					<div class="dropdown-item">Hindi</div>
+					<div class="dropdown-item">Ukrainian</div>
+					<div class="dropdown-item">Deutsch</div>
+					<div class="dropdown-item">Français</div>
+					<div class="dropdown-item">Español</div>
+					<div class="dropdown-item">Polski</div>
+				</div>
+			</div>
+		</div>
+		<div class="footer--bottom">
+			<p class="footer--text">© 2025 image2txt, All rights reserved.</p>
+			<div class="footer--texts">
+				<a href="" class="footer--text">Terms of Use</a>
+				<a href="" class="footer--text">Privacy Policy</a>
+			</div>
+		</div>
+	</div>
+</footer>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js"></script>
+<script src="./js/main.js"></script>
+</body>
 </html>
