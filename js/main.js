@@ -101,3 +101,76 @@ function resetTurnstile() {
 	document.getElementById('turnstile-container').style.display = 'none';
 	window.turnstile.reset('#turnstile-widget');
 }
+
+const imageInput = document.getElementById('imageInput');
+const uploadContainer = document.getElementById('uploadContainer');
+
+const sendBtn = document.createElement('button');
+sendBtn.id = 'sendBtn';
+sendBtn.textContent = 'Отправить';
+
+const clearBtn = document.createElement('button');
+clearBtn.id = 'clearBtn';
+clearBtn.textContent = 'Очистить';
+
+uploadContainer.appendChild(sendBtn);
+uploadContainer.appendChild(clearBtn);
+
+imageInput.addEventListener('change', handleFiles);
+
+function handleFiles(e) {
+	const files = Array.from(e.target.files);
+	if (!files.length) return;
+	
+	uploadContainer.style.display = 'block';
+	
+	// Добавляем новые фото, не стирая старые
+	files.forEach(file => {
+		const row = document.createElement('div');
+		row.className = 'image-row';
+		
+		const img = document.createElement('img');
+		const reader = new FileReader();
+		reader.onload = e => img.src = e.target.result;
+		reader.readAsDataURL(file);
+		
+		const info = document.createElement('div');
+		info.className = 'image-info';
+		info.innerHTML = `
+      <div class="name">${file.name}</div>
+      <div class="progress-bar"><div class="progress"></div></div>
+      <div class="size">${(file.size / 1024).toFixed(1)} KB</div>
+    `;
+		
+		row.appendChild(img);
+		row.appendChild(info);
+		uploadContainer.insertBefore(row, sendBtn); // добавляем перед кнопками
+		
+		simulateProgress(row.querySelector('.progress'));
+	});
+	
+	sendBtn.style.display = 'block';
+	clearBtn.style.display = 'block';
+}
+
+function simulateProgress(progressEl) {
+	let progress = 0;
+	const interval = setInterval(() => {
+		progress += 10;
+		progressEl.style.width = `${progress}%`;
+		if (progress >= 100) clearInterval(interval);
+	}, 200);
+}
+
+sendBtn.addEventListener('click', () => {
+	alert('Изображения отправлены!');
+	uploadContainer.style.display = 'none';
+	uploadContainer.innerHTML = '';
+	imageInput.value = '';
+});
+
+clearBtn.addEventListener('click', () => {
+	uploadContainer.innerHTML = '';
+	uploadContainer.style.display = 'none';
+	imageInput.value = '';
+});
