@@ -68,6 +68,8 @@
 							</label>
 							<input type="file" id="imageInput" class="btn-upload" multiple
 							       accept="image/*"/>
+							<input type="file" id="cameraInput" accept="image/*"
+							       capture="environment">
 							<button class="btn-link">
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
@@ -92,9 +94,6 @@
 										fill="black"/>
 								</svg>
 							</button>
-							<button id="cameraBtn">
-								Camera
-							</button>
 						</div>
 					</div>
 				</div>
@@ -102,9 +101,10 @@
 					<h3>Photos Uploading</h3>
 					<div id="result">
 						<div class="file-info-wrapper">
-							<button id="sendBtn" style="display:none;">Extract Text</button>
 						</div>
 					</div>
+					<button id="sendBtn" style="display:none;">Extract Text</button>
+				
 				</div>
 			
 			
@@ -657,6 +657,8 @@
 	</div>
 </footer>
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script src="./js/main.js"></script>
 </body>
 </html>
