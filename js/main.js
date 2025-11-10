@@ -134,7 +134,14 @@ async function processImage() {
 		clearInterval(singleTimer);
 		
 		if (result.success) {
-			resultEl.textContent = result.text || '⚠️ Текст не найден.';
+			if (result.text && result.text.trim() !== '') {
+				resultEl.textContent = result.text;
+			} else {
+				resultEl.innerHTML = `
+					<div class="no-text">no text found</div>
+					<div class="hint">Please upload an image which have visible text.</div>
+				`;
+			}
 		} else {
 			resultEl.textContent = 'Ошибка: ' + (result.error || 'Неизвестная ошибка');
 		}
@@ -143,12 +150,11 @@ async function processImage() {
 	}
 }
 
+// ==== FILE UPLOAD BUTTON / RIGHT PANEL ====
 const imgBtn = document.querySelector(".custom-upload");
 const resultWrapper = document.querySelector('.result--wrapper');
+const btnUrl = document.querySelector(".btn-link");
 
-imgBtn?.addEventListener('click', () => {
-	resultWrapper?.classList.add('success');
-}, {once: true});
 
 function fileToBase64(file) {
 	return new Promise((resolve, reject) => {
@@ -166,7 +172,6 @@ function resetTurnstile() {
 	try {
 		window.turnstile.reset('#turnstile-widget');
 	} catch {
-		// ignore
 	}
 }
 
@@ -212,54 +217,163 @@ const imageInput = document.getElementById('imageInput');
 const fileWrapper = document.querySelector('.file-info-wrapper');
 const sendBtn = document.getElementById('sendBtn');
 
-// ==== ОБРАБОТКА ФАЙЛОВ ====
+function updateRightPanelVisibility() {
+	if (!resultWrapper || !sendBtn || !fileWrapper) return;
+	const hasFiles = fileWrapper.querySelector('.file-row');
+	if (hasFiles) {
+		resultWrapper.classList.add('success');
+		sendBtn.style.display = 'flex';
+		updatePhotoCount();
+	} else {
+		resultWrapper.classList.remove('success');
+		sendBtn.style.display = 'none';
+	}
+}
+
 if (imageInput && fileWrapper) {
 	imageInput.addEventListener('change', handleFiles);
+}
+
+let cropper;
+const cropModal = document.getElementById('cropModal');
+const cropImage = document.getElementById('cropImage');
+const cropConfirm = document.getElementById('cropConfirm');
+const cropClose = document.getElementById('cropClose');
+
+// ==== ОБРАБОТКА ФАЙЛОВ ====
+function handleFiles(e) {
+	const files = Array.from(e.target.files || []);
+	if (!files.length) return;
 	
-	function handleFiles(e) {
-		const files = Array.from(e.target.files || []);
-		if (!files.length) return;
-		
-		files.forEach(file => {
-			const row = document.createElement('div');
-			row.className = 'file-row';
-			
-			const img = document.createElement('img');
-			img.className = 'file-thumb';
-			img.file = file;
-			const reader = new FileReader();
-			reader.onload = e => img.src = e.target.result;
-			reader.readAsDataURL(file);
-			
-			const info = document.createElement('div');
-			info.className = 'file-info';
-			info.innerHTML = `
-				<div class="size">
-					<span class="filename">${file.name}</span> — ${(file.size / 1024).toFixed(1)} KB
-				</div>
-				<div class="status">Waiting...</div>
-			`;
-			
-			const remove = document.createElement('button');
-			remove.className = 'remove-btn';
-			remove.textContent = '✖';
-			remove.type = 'button';
-			remove.onclick = () => row.remove();
-			
-			const progress = document.createElement('div');
-			progress.className = 'file-progress';
-			progress.style.width = '0%';
-			
-			row.appendChild(img);
-			row.appendChild(info);
-			row.appendChild(remove);
-			row.appendChild(progress);
-			
-			fileWrapper.appendChild(row);
-		});
-		
-		sendBtn.style.display = 'flex';
+	// === 1️⃣ Проверка лимита (макс. 3 файла)
+	const existingFiles = fileWrapper.querySelectorAll('.file-row').length;
+	if (existingFiles + files.length > 3) {
+		showPopup('limit');
+		return;
 	}
+	
+	files.forEach(file => {
+		// === 2️⃣ Проверка типа
+		if (!file.type.startsWith('image/')) {
+			showPopup('type');
+			return;
+		}
+		
+		// === 3️⃣ Проверка размера (макс. 5 MB)
+		if (file.size > 5 * 1024 * 1024) {
+			showPopup('size');
+			return;
+		}
+		
+		const row = document.createElement('div');
+		row.className = 'file-row';
+		
+		const imgWrap = document.createElement('div');
+		imgWrap.className = 'file-thumb-wrap';
+		
+		const img = document.createElement('img');
+		img.className = 'file-thumb';
+		img.file = file;
+		
+		const reader = new FileReader();
+		reader.onload = e => img.src = e.target.result;
+		reader.readAsDataURL(file);
+		
+		// === КНОПКА КРОП ===
+		const cropBtn = document.createElement('button');
+		cropBtn.className = 'crop-btn';
+		cropBtn.innerHTML = '<svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
+			'<g clip-path="url(#clip0_109_17673)">\n' +
+			'<path d="M3.065 0.5L3 8C3 8.26522 3.10536 8.51957 3.29289 8.70711C3.48043 8.89464 3.73478 9 4 9H11.5" stroke="#6C6F73" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+			'<path d="M0.5 3.065L8 3C8.26522 3 8.51957 3.10536 8.70711 3.29289C8.89464 3.48043 9 3.73478 9 4V11.5" stroke="#6C6F73" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+			'</g>\n' +
+			'<defs>\n' +
+			'<clipPath id="clip0_109_17673">\n' +
+			'<rect width="12" height="12" fill="white"/>\n' +
+			'</clipPath>\n' +
+			'</defs>\n' +
+			'</svg>';
+		cropBtn.type = 'button';
+		cropBtn.onclick = () => openCropper(img);
+		
+		imgWrap.appendChild(img);
+		imgWrap.appendChild(cropBtn);
+		
+		const info = document.createElement('div');
+		info.className = 'file-info';
+		info.innerHTML = `
+			<div class="size">
+				<span class="filename">${file.name}</span> (${(file.size / 1024).toFixed(1)} KB)
+			</div>
+			<div class="status"></div>
+		`;
+		
+		const remove = document.createElement('button');
+		remove.className = 'remove-btn';
+		remove.textContent = '✖';
+		remove.type = 'button';
+		remove.onclick = () => {
+			row.remove();
+			updatePhotoCount();
+			updateRightPanelVisibility();
+		};
+		
+		const progress = document.createElement('div');
+		progress.className = 'file-progress';
+		progress.style.width = '0%';
+		
+		row.appendChild(imgWrap);
+		row.appendChild(info);
+		row.appendChild(remove);
+		row.appendChild(progress);
+		fileWrapper.appendChild(row);
+	});
+	
+	updateRightPanelVisibility();
+}
+
+// === КРОППЕР ===
+function openCropper(imgEl) {
+	cropImage.src = imgEl.src;
+	cropModal.classList.add('active');
+	
+	if (cropper) cropper.destroy();
+	cropper = new Cropper(cropImage, {
+		aspectRatio: NaN,
+		viewMode: 1,
+		responsive: true,
+		zoomable: true,
+		zoomOnWheel: true
+	});
+	
+	const zoomInput = document.getElementById('cropZoom');
+	const cropConfirm = document.getElementById('cropConfirm');
+	const cropCancel = document.getElementById('cropCancel');
+	const cropClose = document.getElementById('cropClose');
+	
+	zoomInput.value = 1;
+	
+	// zoom
+	zoomInput.oninput = () => cropper.zoomTo(parseFloat(zoomInput.value));
+	
+	// apply
+	cropConfirm.onclick = async () => {
+		const canvas = cropper.getCroppedCanvas({maxWidth: 2000, maxHeight: 2000});
+		const croppedBlob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+		const croppedFile = new File([croppedBlob], imgEl.file.name, {type: 'image/png'});
+		imgEl.src = canvas.toDataURL('image/png');
+		imgEl.file = croppedFile;
+		cropModal.classList.remove('active');
+		cropper.destroy();
+	};
+	
+	// cancel & close (оба закрывают без изменений)
+	const closeModal = () => {
+		cropModal.classList.remove('active');
+		cropper.destroy();
+	};
+	cropCancel.onclick = closeModal;
+	cropClose.onclick = closeModal;
 }
 
 // ==== ПОСЛЕДОВАТЕЛЬНАЯ ОБРАБОТКА ====
@@ -288,8 +402,10 @@ sendBtn?.addEventListener('click', async () => {
 			name: file.name,
 			size: (file.size / 1024).toFixed(1) + ' KB',
 			imageSrc: img.src,
-			text: resultText
+			text: resultText,
+			mimeType: file.type
 		});
+		
 		await new Promise(r => setTimeout(r, 300));
 	}
 	
@@ -330,102 +446,178 @@ async function processSingleFile(file, row, statusEl, progressEl) {
 		
 		if (result.success) {
 			statusEl.textContent = 'Done';
-			return result.text || '⚠️ Текст не найден.';
+			if (result.text && result.text.trim() !== '') {
+				console.log('OCR result for', file.name, ':', result.text);
+				return result.text;
+			} else {
+				console.log('OCR result for', file.name, ': NO_TEXT_FOUND');
+				return 'NO_TEXT_FOUND';
+			}
 		} else {
+			const errText = 'Ошибка: ' + (result.error || 'Неизвестная ошибка');
 			statusEl.textContent = 'Error';
-			return 'Ошибка: ' + (result.error || 'Неизвестная ошибка');
+			console.log('OCR result for', file.name, ':', errText);
+			return errText;
 		}
 	} catch (err) {
+		const errText = 'Ошибка: ' + err.message;
 		processProgress.error();
-		statusEl.textContent = 'Ошибка: ' + err.message;
-		return 'Ошибка: ' + err.message;
+		statusEl.textContent = errText;
+		console.log('OCR result for', file.name, ':', errText);
+		return errText;
 	}
 }
 
 // ==== ФИНАЛЬНЫЙ ЭКРАН ====
-function showFinalResults(results) {
+// ==== ФИНАЛЬНЫЙ ЭКРАН ====
+function showFinalResults(initialResults) {
 	const heroSection = document.querySelector('.hero');
 	if (!heroSection) return;
 	
 	heroSection.innerHTML = '';
-	
 	const container = document.createElement('div');
 	container.className = 'final-results container';
 	
 	const header = document.createElement('div');
 	header.className = 'final-header';
 	header.innerHTML = `
-		<h2>Files Converted</h2>
-		<div class="final-buttons">
+		<h2>Files Converting...</h2>
+		<div class="final-buttons hidden">
 			<button class="restart-btn">Start Over</button>
 			<button class="download-btn">Download Zip</button>
 		</div>
 	`;
 	container.appendChild(header);
+	heroSection.appendChild(container);
 	
-	results.forEach(res => {
+	// создаём карточки для каждой картинки с "фейковой" анимацией
+	initialResults.forEach((res, index) => {
 		const item = document.createElement('div');
-		item.className = 'result-item';
+		item.className = 'result-item converting';
+		item.dataset.index = index;
 		item.innerHTML = `
 			<div class="result-img">
 				<img src="${res.imageSrc}" alt="${res.name}">
 				<div class="file-info-line">${res.size}</div>
 			</div>
 			<div class="result-text">
-				<textarea readonly>${res.text}</textarea>
-				<div class="item-buttons">
-					<button class="expand-btn">Expand</button>
-					<button class="copy-btn">Copy</button>
-					<button class="save-btn">Download</button>
-				</div>
+				<div class="convert-overlay"><span>Converting</span></div>
 			</div>
 		`;
 		container.appendChild(item);
 		
-		// === функционал кнопок ===
-		const textarea = item.querySelector('textarea');
-		const expandBtn = item.querySelector('.expand-btn');
-		const copyBtn = item.querySelector('.copy-btn');
-		const saveBtn = item.querySelector('.save-btn');
-		
-		let expanded = false;
-		
-		expandBtn.addEventListener('click', () => {
-			expanded = !expanded;
-			if (expanded) {
-				textarea.style.height = '400px';
-				expandBtn.textContent = 'Collapse';
-			} else {
-				textarea.style.height = '52px';
-				expandBtn.textContent = 'Expand';
+		// фейковая прогресс-анимация
+		let progress = 0;
+		const overlay = item.querySelector('.convert-overlay');
+		const progressTimer = setInterval(() => {
+			progress += Math.random() * 4;
+			if (progress >= 100) {
+				progress = 100;
+				clearInterval(progressTimer);
+				
+				// заменяем overlay на финальный результат
+				item.classList.remove('converting');
+				item.querySelector('.result-text').innerHTML = `
+					<textarea readonly>${res.text}</textarea>
+					<div class="item-buttons">
+						<button class="expand-btn"><img src="/images/expand.svg" alt=""></button>
+						<button class="copy-btn"><img src="/images/copy.svg" alt=""></button>
+						<button class="save-btn"><img src="/images/download.svg" alt=""></button>
+					</div>
+				`;
+				
+				const textarea = item.querySelector('textarea');
+				const expandBtn = item.querySelector('.expand-btn');
+				const copyBtn = item.querySelector('.copy-btn');
+				const saveBtn = item.querySelector('.save-btn');
+				
+				let expanded = false;
+				expandBtn.addEventListener('click', () => {
+					expanded = !expanded;
+					textarea.style.height = expanded ? '400px' : '52px';
+					expandBtn.classList.toggle('active', expanded);
+				});
+				copyBtn.addEventListener('click', async () => {
+					await navigator.clipboard.writeText(res.text);
+					copyBtn.classList.add('copied');
+					setTimeout(() => copyBtn.classList.remove('copied'), 1500);
+				});
+				saveBtn.addEventListener('click', () => {
+					const blob = new Blob([res.text], {type: 'text/plain'});
+					const link = document.createElement('a');
+					link.href = URL.createObjectURL(blob);
+					link.download = res.name.replace(/\.[^/.]+$/, '') + '.txt';
+					link.click();
+					URL.revokeObjectURL(link.href);
+				});
 			}
-		});
-		
-		
-		copyBtn.addEventListener('click', async () => {
-			await navigator.clipboard.writeText(res.text);
-			copyBtn.textContent = 'Copied!';
-			setTimeout(() => (copyBtn.textContent = 'Copy'), 1500);
-		});
-		
-		saveBtn.addEventListener('click', () => {
-			const blob = new Blob([res.text], {type: 'text/plain'});
-			const link = document.createElement('a');
-			link.href = URL.createObjectURL(blob);
-			link.download = res.name.replace(/\.[^/.]+$/, '') + '.txt';
-			link.click();
-			URL.revokeObjectURL(link.href);
-		});
+			overlay.style.setProperty('--progress', `${progress}%`);
+		}, 200);
 	});
 	
-	heroSection.appendChild(container);
+	// кнопки перезапуска и загрузки
+	setTimeout(() => {
+		header.querySelector('h2').textContent = 'Files Converted';
+		header.querySelector('.final-buttons').classList.remove('hidden');
+		document.querySelector('.restart-btn').addEventListener('click', () => location.reload());
+		document.querySelector('.download-btn').addEventListener('click', () => downloadZip(initialResults));
+	}, 3500);
+}
+
+
+// === PHOTO MODAL ===
+function openPhotoModal(src) {
+	const modal = document.getElementById('photoModal');
+	const close = document.getElementById('photoClose');
+	const img = document.getElementById('photoView');
 	
-	document.querySelector('.restart-btn').addEventListener('click', () => location.reload());
-	document.querySelector('.download-btn').addEventListener('click', () => downloadZip(results));
+	img.src = src;
+	modal.classList.add('active');
+	
+	const closeModal = () => modal.classList.remove('active');
+	close.onclick = closeModal;
+	modal.onclick = e => {
+		if (e.target === modal) closeModal();
+	};
+}
+
+// === INFO MODAL ===
+function openInfoModal(data) {
+	const modal = document.getElementById('infoModal');
+	const close = document.getElementById('infoClose');
+	const img = document.getElementById('infoImage');
+	const name = document.getElementById('infoName');
+	const size = document.getElementById('infoSize');
+	const dimensions = document.getElementById('infoDimensions');
+	const type = document.getElementById('infoType');
+	
+	img.src = data.imageSrc;
+	name.textContent = data.name;
+	size.textContent = data.size;
+	type.textContent = data.mimeType || '—';
+	
+	const tempImg = new Image();
+	tempImg.src = data.imageSrc;
+	tempImg.onload = () => {
+		dimensions.textContent = `${tempImg.width} × ${tempImg.height}px`;
+	};
+	
+	modal.classList.add('active');
+	
+	const closeModal = () => modal.classList.remove('active');
+	close.onclick = closeModal;
+	modal.onclick = e => {
+		if (e.target === modal) closeModal();
+	};
 }
 
 // ==== ZIP ====
 async function downloadZip(results) {
+	if (!results.length) {
+		alert('Нет файлов для скачивания');
+		return;
+	}
+	
 	const zip = new JSZip();
 	results.forEach(res => {
 		const safeName = res.name.replace(/\.[^/.]+$/, '') + '.txt';
@@ -442,28 +634,176 @@ async function downloadZip(results) {
 // ==== URL BUTTONS ====
 const btnLink = document.querySelector(".btn-link");
 const urlBtns = document.querySelector('.url--btns__list');
+const sendBtnUrl = document.getElementById('sendBtnUrl');
 
 btnLink?.addEventListener('click', () => {
 	urlBtns?.classList.toggle("active");
 });
+
+// добавляем картинку по URL в тот же список, что и файлы
+sendBtnUrl?.addEventListener('click', () => {
+	addImageFromUrl();
+});
+
+async function addImageFromUrl() {
+	const input = document.getElementById('imageUrl');
+	if (!input) return;
+	const url = input.value.trim();
+	
+	if (!url || !/^https?:\/\//i.test(url)) {
+		alert('Please enter a valid image URL (https://...)');
+		return;
+	}
+	
+	try {
+		const resp = await fetch(url);
+		if (!resp.ok) {
+			alert('Cannot load image from this URL');
+			return;
+		}
+		
+		const contentType = resp.headers.get('Content-Type') || '';
+		if (!contentType.startsWith('image/')) {
+			alert('URL does not point to an image file');
+			return;
+		}
+		
+		const blob = await resp.blob();
+		const ext = (contentType.split('/')[1] || 'png').split(';')[0];
+		const urlName = url.split('/').pop() || `image_from_url.${ext}`;
+		const safeName = urlName.includes('.') ? urlName : `${urlName}.${ext}`;
+		const file = new File([blob], safeName, {type: blob.type || contentType});
+		
+		handleFiles({target: {files: [file]}});
+		updateRightPanelVisibility();
+	} catch (e) {
+		console.error(e);
+		alert('Error while loading image from URL');
+	}
+}
 
 // ==== CAMERA BUTTON ====
 const cameraBtn = document.getElementById('cameraBtn');
 const cameraInput = document.getElementById('cameraInput');
 
 cameraBtn?.addEventListener('click', () => {
-	// открываем камеру / галерею
 	cameraInput?.click();
 });
 
-// когда пользователь сделал фото или выбрал файл
 cameraInput?.addEventListener('change', (e) => {
 	const files = Array.from(e.target.files || []);
 	if (!files.length) return;
-	
-	// добавляем фото в список так же, как при обычной загрузке
 	handleFiles({target: {files}});
-	
-	// автоматически показываем секцию с файлами
-	resultWrapper?.classList.add('success');
+	updateRightPanelVisibility();
 });
+
+// ==== POPUP ====
+function showPopup(type = 'generic') {
+	const popup = document.getElementById('popup');
+	const img = document.getElementById('popupImage');
+	const title = document.getElementById('popupTitle');
+	const msg = document.getElementById('popupMessage');
+	const close = document.getElementById('popupClose');
+	
+	switch (type) {
+		case 'limit':
+			img.src = './images/limit.png';
+			title.textContent = 'File Limit Exceed';
+			msg.textContent = 'You can upload up to 3 files only.';
+			break;
+		
+		case 'type':
+			img.src = './images/type.png';
+			title.textContent = 'Unsupported File Type';
+			msg.textContent = 'The uploaded file must be an image file like png, jpeg, webp, gif, bmp, heic or tiff.';
+			break;
+		
+		case 'size':
+			img.src = './images/size.png';
+			title.textContent = 'File Size Exceed';
+			title.textContent = 'File Size Exceed';
+			msg.textContent = 'The website allows users to upload files up to a maximum size of 5 MB only.';
+			break;
+		
+		default:
+			img.src = './images/limit.png';
+			title.textContent = 'Error';
+			msg.textContent = 'An unknown error occurred.';
+	}
+	
+	popup.classList.add('active');
+	
+	const closePopup = () => popup.classList.remove('active');
+	close.onclick = closePopup;
+	popup.onclick = e => {
+		if (e.target === popup) closePopup();
+	};
+}
+
+// ==== DRAG & DROP (вся зона input__container) ====
+const dropContainer = document.querySelector('.input__container');
+
+if (dropContainer) {
+	dropContainer.addEventListener('dragover', (e) => {
+		e.preventDefault();
+		dropContainer.classList.add('dragover');
+	});
+	
+	dropContainer.addEventListener('dragleave', (e) => {
+		if (!dropContainer.contains(e.relatedTarget)) {
+			dropContainer.classList.remove('dragover');
+		}
+	});
+	
+	dropContainer.addEventListener('drop', (e) => {
+		e.preventDefault();
+		dropContainer.classList.remove('dragover');
+		
+		const files = Array.from(e.dataTransfer.files || []);
+		if (files.length) {
+			handleFiles({target: {files}});
+			updateRightPanelVisibility();
+			updatePhotoCount();
+		}
+	});
+}
+
+// ==== CTRL + V (вставка изображений) ====
+if (dropContainer) {
+	document.addEventListener('paste', (e) => {
+		const items = e.clipboardData?.items;
+		if (!items) return;
+		
+		const files = [];
+		for (const item of items) {
+			if (item.kind === 'file') {
+				const file = item.getAsFile();
+				if (file && file.type.startsWith('image/')) {
+					files.push(file);
+				}
+			}
+		}
+		
+		if (files.length) {
+			handleFiles({target: {files}});
+			updateRightPanelVisibility();
+			updatePhotoCount();
+		}
+	});
+}
+
+
+// ==== ОБНОВЛЕНИЕ СЧЁТЧИКА ФОТО ====
+function updatePhotoCount() {
+	const title = document.querySelector('.result-current'); // замени селектор, если у тебя другой
+	if (!title) return;
+	
+	const fileRows = document.querySelectorAll('.file-info-wrapper .file-row');
+	const count = fileRows.length;
+	
+	if (count > 0) {
+		title.textContent = `${count} Photo${count > 1 ? 's' : ''} Uploading`;
+	} else {
+		title.textContent = 'Photos Uploading';
+	}
+}
