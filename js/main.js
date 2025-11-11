@@ -414,20 +414,28 @@ sendBtn?.addEventListener('click', async () => {
 
 // ==== ОБРАБОТКА ОДНОГО ФАЙЛА ====
 async function processSingleFile(file, row, statusEl, progressEl) {
-	const uploadProgress = startFakeProgress(progressEl, statusEl, 0, 60);
+	/*
+		const uploadProgress = startFakeProgress(progressEl, statusEl, 0, 60);
+	*/
 	
 	let base64;
 	try {
 		base64 = await fileToBase64(file);
-		uploadProgress.complete();
+		/*
+				uploadProgress.complete();
+		*/
 	} catch (err) {
-		uploadProgress.error();
+		/*
+				uploadProgress.error();
+		*/
 		statusEl.textContent = 'Ошибка при чтении файла';
 		return 'Ошибка при чтении файла';
 	}
 	
 	statusEl.textContent = 'Processing...';
-	const processProgress = startFakeProgress(progressEl, statusEl, 60, 100);
+	/*
+		const processProgress = startFakeProgress(progressEl, statusEl, 60, 100);
+	*/
 	
 	try {
 		const res = await fetch(API_URL, {
@@ -442,7 +450,9 @@ async function processSingleFile(file, row, statusEl, progressEl) {
 		});
 		
 		const result = await res.json();
-		processProgress.complete();
+		/*
+				processProgress.complete();
+		*/
 		
 		if (result.success) {
 			statusEl.textContent = 'Done';
@@ -461,7 +471,9 @@ async function processSingleFile(file, row, statusEl, progressEl) {
 		}
 	} catch (err) {
 		const errText = 'Ошибка: ' + err.message;
-		processProgress.error();
+		/*
+				processProgress.error();
+		*/
 		statusEl.textContent = errText;
 		console.log('OCR result for', file.name, ':', errText);
 		return errText;
@@ -501,7 +513,8 @@ function showFinalResults(initialResults) {
 				<div class="file-info-line">${res.size}</div>
 			</div>
 			<div class="result-text">
-				<div class="convert-overlay"><span>Converting</span></div>
+				<div class="convert-overlay"></div>
+				<span class="convert-text">Converting</span>
 			</div>
 		`;
 		container.appendChild(item);
@@ -518,13 +531,13 @@ function showFinalResults(initialResults) {
 				// заменяем overlay на финальный результат
 				item.classList.remove('converting');
 				item.querySelector('.result-text').innerHTML = `
-					<textarea readonly>${res.text}</textarea>
-					<div class="item-buttons">
-						<button class="expand-btn"><img src="/images/expand.svg" alt=""></button>
-						<button class="copy-btn"><img src="/images/copy.svg" alt=""></button>
-						<button class="save-btn"><img src="/images/download.svg" alt=""></button>
-					</div>
-				`;
+	<textarea>${res.text}</textarea>
+	<div class="item-buttons">
+		<button class="expand-btn"><img src="/images/expand.svg" alt=""></button>
+		<button class="copy-btn"><img src="/images/copy.svg" alt=""></button>
+		<button class="save-btn"><img src="/images/download.svg" alt=""></button>
+	</div>
+`;
 				
 				const textarea = item.querySelector('textarea');
 				const expandBtn = item.querySelector('.expand-btn');
@@ -534,22 +547,36 @@ function showFinalResults(initialResults) {
 				let expanded = false;
 				expandBtn.addEventListener('click', () => {
 					expanded = !expanded;
-					textarea.style.height = expanded ? '400px' : '52px';
+					
+					if (expanded) {
+						item.style.maxHeight = '300px'; // или auto, если контент длинный
+						item.style.height = 'auto';
+						textarea.style.height = '100%';
+						textarea.style.marginTop = '25px';
+					} else {
+						item.style.maxHeight = '120px';
+						textarea.style.height = '52px';
+						textarea.style.marginTop = '0';
+					}
+					
 					expandBtn.classList.toggle('active', expanded);
 				});
+				
 				copyBtn.addEventListener('click', async () => {
-					await navigator.clipboard.writeText(res.text);
+					await navigator.clipboard.writeText(textarea.value);
 					copyBtn.classList.add('copied');
 					setTimeout(() => copyBtn.classList.remove('copied'), 1500);
 				});
+				
 				saveBtn.addEventListener('click', () => {
-					const blob = new Blob([res.text], {type: 'text/plain'});
+					const blob = new Blob([textarea.value], {type: 'text/plain'});
 					const link = document.createElement('a');
 					link.href = URL.createObjectURL(blob);
 					link.download = res.name.replace(/\.[^/.]+$/, '') + '.txt';
 					link.click();
 					URL.revokeObjectURL(link.href);
 				});
+				
 			}
 			overlay.style.setProperty('--progress', `${progress}%`);
 		}, 200);
