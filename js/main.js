@@ -546,7 +546,7 @@ function showFinalResults(initialResults) {
 				
 				item.classList.remove('converting');
 				const resultHTML = res.text.includes('no-text-block')
-					? `${res.text}` // только HTML-блок
+					? `${res.text}`
 					: `<p contenteditable="true">${res.text}</p>
        <div class="item-buttons">
            <button class="expand-btn"><img src="/images/expand.svg" alt=""></button>
@@ -555,6 +555,11 @@ function showFinalResults(initialResults) {
        </div>`;
 				
 				item.querySelector('.result-text').innerHTML = resultHTML;
+
+// добавляем красный бордер для пустых результатов
+				if (res.text.includes('no-text-block')) {
+					item.classList.add('no-text-result');
+				}
 				
 				
 				const textarea = item.querySelector('p');
