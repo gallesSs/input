@@ -1658,6 +1658,7 @@ input:-webkit-autofill:active {
 	font-weight: 400;
 	line-height: 140%; /* 19.6px */
 	margin-right: 15px;
+	max-width: 100px;
 }
 
 .result-img > img {
@@ -1775,7 +1776,7 @@ input:-webkit-autofill:active {
 	border: none;
 }
 
-#cameraInput {
+#cameraInput, .cameraInput {
 	display: none;
 }
 
@@ -2584,4 +2585,8 @@ cropper-image {
 .result-item.no-text-result {
 	border-radius: 16px;
 	border: 1px solid var(--Red, #EB5757);
+}
+
+[id] {
+	scroll-margin-top: 80px; /* любое значение */
 }

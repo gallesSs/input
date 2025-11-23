@@ -16,6 +16,18 @@ closeBurgers.forEach((elem) => {
 	});
 });
 
+// Закрывать мобильное меню при клике по любому элементу внутри (ссылке/кнопке)
+if (burgerContent) {
+	burgerContent.addEventListener("click", (e) => {
+		// Закрываем ТОЛЬКО если клик по ссылке или кнопке
+		if (e.target.closest("a") || e.target.closest("button")) {
+			burgerContent.classList.remove("active");
+			mask.classList.remove("active");
+			burgerBtn.classList.remove("opened");
+		}
+	});
+}
+
 // ==== FAQ ====
 const faq = document.querySelectorAll(".faq--item");
 faq.forEach((elem) => {
