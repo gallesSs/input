@@ -172,9 +172,6 @@
 		margin-top: 120px;
 	}
 	
-	#cameraInput {
-		display: flex;
-	}
 	
 	.clients__list {
 		min-width: max-content;
@@ -344,7 +341,13 @@
 	
 	.custom-upload {
 		width: 248px;
+		max-height: 48px;
 	}
+	
+	.btns__list {
+		flex-direction: column;
+	}
+	
 	
 	#imageUrl, .btn-link, #sendBtnUrl {
 		display: none;
@@ -361,6 +364,43 @@
 	.input__container h3 {
 		text-wrap: wrap;
 		max-width: 300px;
+	}
+	
+	.cameraInput {
+		display: flex;
+		height: 48px;
+		padding: 3.056px 32px;
+		justify-content: center;
+		align-items: center;
+		gap: 3.056px;
+		align-self: stretch;
+		border-radius: 58px;
+		border: 1px solid #0080FF;
+		width: 248px;
+		margin: 0 auto;
+	}
+	
+	.hero__main {
+		flex-direction: column;
+	}
+	
+	.result--wrapper {
+		width: 100%;
+		min-width: auto;
+	}
+	
+	.file-row {
+		height: fit-content;
+	}
+	
+	.file-info-wrapper {
+		min-height: 400px;
+		flex-direction: column;
+		align-items: start;
+	}
+	
+	.result-text > p {
+		width: 100%;
 	}
 	
 }
